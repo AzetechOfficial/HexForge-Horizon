@@ -1,0 +1,11 @@
+[package]
+name = "hexforge"
+version = "0.1.0"
+edition = "2024"
+description = "Bundle and install mods for the Horizon Rust Minecraft project"
+license = "MIT"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+zip = { version = "2", default-features = false, features = ["deflate"] }
