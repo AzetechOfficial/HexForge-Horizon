@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge" alt="PRs Welcome">
 </p>
 
-[**Getting Started**](#-quick-start) • [**Documentation**](https://github.com/yourusername/hexforge/wiki) • [**API & Modding**](#-writing-your-first-hexforge-mod) • [**Discord**](https://discord.gg/yourinvite)
+[**Getting Started**](#-quick-start) • [**Documentation**](https://github.com/AzetechOfficial/hexforge-horizon/wiki) • [**API & Modding**](#-writing-your-first-hexforge-mod) • [**Discord**](https://discord.gg/skibiditoilet)
 
 ---
 </div>
@@ -42,5 +42,5 @@ Ensure you have the [Rust toolchain](https://rustup.rs/) (stable) installed on y
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/yourusername/hexforge.git](https://github.com/yourusername/hexforge.git)
+git clone [https://github.com/azetechofficial/hexforge.git](https://github.com/azetechofficial/hexforge.git)
 cd hexforge
