@@ -12,6 +12,8 @@ HexForge is a Rust command-line tool and library for bundling and installing mod
 
 HexForge does not compile native mods or load `.hxforge` files inside Horizon. Use Horizon's own tooling and launcher for creating, validating, and building the mods themselves. Native mods contain Rust source that changes the game during the launcher's build, so only install native mods you trust.
 
+HexForge also has an experimental Java bytecode translator for `.jar` files. It translates only a small, self-contained subset of static integer methods; it is not a general Java-to-Rust compiler and does not translate Forge APIs, game hooks, or mod lifecycle behavior.
+
 ## Requirements
 
 - Rust stable and Cargo
@@ -58,6 +60,14 @@ hxforge install target/my_pack.hxforge --game-dir "C:\path\to\Horizon\game"
 On macOS or Linux, pass the path to the Horizon game folder instead. The game folder is the one Horizon uses for `options.txt`. HexForge copies `.hmod` files to `horizon-mods/` and `.hnmod` files to `horizon-native-mods/`. It refuses to overwrite an installed file; remove or rename that file before reinstalling.
 
 `hxforge check` verifies the `.hxforge` manifest and bundle layout. For Horizon's package-level checks, use Horizon's own tooling, such as `cargo horizon-mod check <file>`.
+
+## Experimental Forge JAR translation
+
+```sh
+hxforge translate mod.jar translated.rs
+```
+
+See the [getting-started guide](docs/getting-started.md) for the exact supported subset and limitations. This is an experimental Forge-first input path, not a Forge API or mod-lifecycle translator; generated Rust is not an `.hnmod`.
 
 ## Bundle format
 

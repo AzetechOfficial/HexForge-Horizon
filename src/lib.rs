@@ -7,6 +7,9 @@ use std::{
 };
 use zip::{CompressionMethod, ZipArchive, ZipWriter, write::SimpleFileOptions};
 
+mod translator;
+pub use translator::{TranslationReport, translate_jar};
+
 const MANIFEST: &str = "hxforge.toml";
 const SCHEMA: u32 = 1;
 

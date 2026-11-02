@@ -5,6 +5,10 @@ edition = "2024"
 description = "Bundle and install mods for the Horizon Rust Minecraft project"
 license = "MIT"
 
+[[bin]]
+name = "hxforge"
+path = "src/main.rs"
+
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"

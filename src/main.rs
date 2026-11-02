@@ -4,7 +4,7 @@ use std::{
     process::ExitCode,
 };
 
-use hexforge::{Manifest, check_bundle, install_bundle, pack_project};
+use hexforge::{Manifest, check_bundle, install_bundle, pack_project, translate_jar};
 
 fn main() -> ExitCode {
     match run() {
@@ -23,6 +23,7 @@ fn run() -> Result<(), String> {
         Some("pack") => pack(args.collect()),
         Some("check") => check(args.collect()),
         Some("install") => install(args.collect()),
+        Some("translate") => translate(args.collect()),
         Some("--help") | Some("-h") | None => {
             print_help();
             Ok(())
@@ -112,6 +113,37 @@ fn install(args: Vec<String>) -> Result<(), String> {
     Ok(())
 }
 
+fn translate(args: Vec<String>) -> Result<(), String> {
+    if args.len() != 2 {
+        return Err("usage: hxforge translate <input.jar> <output.rs>".into());
+    }
+
+    let input = Path::new(&args[0]);
+    let output = Path::new(&args[1]);
+    if input == output {
+        return Err("input JAR and output Rust file must be different paths".into());
+    }
+
+    let report = translate_jar(input)?;
+    for diagnostic in &report.diagnostics {
+        eprintln!("warning: {diagnostic}");
+    }
+    if report.translated_methods == 0 {
+        return Err("no supported methods were translated; see diagnostics above".into());
+    }
+
+    fs::write(output, &report.generated_rust)
+        .map_err(|error| format!("{}: {error}", output.display()))?;
+    println!(
+        "Translated {} method(s) from {} class(es) to {} ({} unsupported item(s))",
+        report.translated_methods,
+        report.classes,
+        output.display(),
+        report.diagnostics.len()
+    );
+    Ok(())
+}
+
 fn flag<'a>(args: &'a [String], name: &str) -> Option<&'a str> {
     args.windows(2)
         .find(|pair| pair[0] == name)
@@ -139,6 +171,7 @@ fn print_help() {
            hxforge init <directory> [--id ID] [--name NAME] [--version VERSION]\n\
            hxforge pack [project-directory] [output.hxforge]\n\
            hxforge check <bundle.hxforge>\n\
-           hxforge install <bundle.hxforge> --game-dir <Horizon game folder>"
+           hxforge install <bundle.hxforge> --game-dir <Horizon game folder>\n\
+           hxforge translate <input.jar> <output.rs>"
     );
 }
